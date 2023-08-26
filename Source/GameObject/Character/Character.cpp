@@ -4,8 +4,8 @@
 
 Character::Character()
 	:
-	graphic_handle_idle{ 0,0,0,0 },
-	graphic_idle_flame(0)
+	graphicHandleIdle{ 0,0,0,0 },
+	graphicIdleFlame(0)
 {
 }
 
@@ -18,8 +18,9 @@ void Character::Initialize()
 {
 	__super::Initialize();
 
-	// 画像の読み込みsad
-	LoadDivGraph(_T("Resources/Images/collon_wait_a.bmp"), idleMaxFlame, idleMaxFlame, 1, 128, 128, graphic_handle_idle);
+	// 画像の読み込み
+	LoadDivGraph(_T("Resources/Images/collon_wait_a.bmp"), maxIdleFlame, maxIdleFlame, 1, 128, 128, graphicHandleIdle);
+	LoadDivGraph(_T("Resources/Images/collon_run8.bmp"), maxRunFlame, 4, 2, 128, 128, graphicHandleRun);
 }
 
 void Character::Update(float delta_seconds)
@@ -31,10 +32,16 @@ void Character::Update(float delta_seconds)
 	if (CheckHitKey(KEY_INPUT_A) == 1)
 	{
 		input_dir.x = -1;
+		onEnterPlayerState(playerState::RUN);
 	}
 	else if (CheckHitKey(KEY_INPUT_D) == 1)
 	{
 		input_dir.x = 1;
+		onEnterPlayerState(playerState::RUN);
+	}
+	else
+	{
+		onEnterPlayerState(playerState::IDLE);
 	}
 
 	/*if (CheckHitKey(KEY_INPUT_W) == 1)
@@ -58,29 +65,62 @@ void Character::Draw(const Vector2D& screen_offset)
 	// 画像の描画
 	int x, y;
 	GetPosition().ToInt(x, y);
+	boolean canMoveNextWinkFlame = (idleFlameAdjust - idleFlameDelay) % winkFlameDelay == 0;
 
-	if (flame_adjust >= idleFlameDelay)//60f立ったら瞬きモーションに入る
+	switch (getState()) 
 	{
-		graphic_idle_flame++;
-		printfDx("@@\n");
-	}
-	if (graphic_idle_flame == idleMaxFlame)//最後の瞬きモーションが終わったらリセットする
-	{
-		flame_adjust = 0;
-		graphic_idle_flame = 0;
-		printfDx("リセット\n");
+		case playerState::IDLE:
+
+			if (idleFlameAdjust >= idleFlameDelay && canMoveNextWinkFlame)//120fたったら瞬きモーションに入る。5fごとにフレームを動かす
+			{
+				graphicIdleFlame++;
+				printfDx("@@\n");
+			}
+			if (graphicIdleFlame == maxIdleFlame)//最後の瞬きモーションが終わったらリセットする
+			{
+				idleFlameAdjust = 0;
+				graphicIdleFlame = 0;
+				printfDx("リセット\n");
+			}
+
+			idleFlameAdjust++;
+			//if(idleFlameAdjust - idleFlameDelay )//125, 130, 135
+			DrawGraph(x, y, graphicHandleIdle[graphicIdleFlame], true);
+			break;
+
+		case playerState::RUN:
+			if (runFlameAdjust == runFlameDelay)//10f立ったら次のモーションに移る
+			{
+				runFlameAdjust = 0;
+				graphicRunFlame++;
+			}
+			if (graphicRunFlame == maxRunFlame)//最後の瞬きモーションが終わったらリセットする
+			{
+				graphicRunFlame = 0;
+			}
+
+			runFlameAdjust++;
+
+			//左右反転処理。ただしこのままだとキーを反転しても途中のflameから描画されるため注意
+			if(CheckHitKey(KEY_INPUT_A))
+			{
+				DrawTurnGraph(x, y, graphicHandleRun[graphicRunFlame], true);
+			}
+			else if(CheckHitKey(KEY_INPUT_D) == 1)
+			{
+				DrawGraph(x, y, graphicHandleRun[graphicRunFlame], true);
+			}
+			break;
+
 	}
 
-	flame_adjust++;
-	printfDx("%d\n",flame_adjust);
-	DrawGraph(x, y, graphic_handle_idle[graphic_idle_flame], true);
 }
 
 void Character::Finalize()
 {
 	__super::Finalize();
 
-	for (int graphic : graphic_handle_idle)
+	for (int graphic : graphicHandleIdle)
 	{
 	 //画像の破棄
 		DeleteGraph(graphic);
