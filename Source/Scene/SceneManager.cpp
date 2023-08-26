@@ -20,6 +20,7 @@ void SceneManager::Initialize()
 {
 	// 開始シーンをSAMPLE_SCENEに設定
 	ChangeScene(SceneType::SAMPLE_SCENE);
+	// 今後はここをTitleSceneに置き換える
 }
 
 void SceneManager::Update(float DeltaSeconds)

@@ -1,4 +1,6 @@
 #include "SceneBase.h"
+#include <iostream>
+#include "DxLib.h"
 
 SceneBase::SceneBase()
 	: screen_offset(Vector2D())

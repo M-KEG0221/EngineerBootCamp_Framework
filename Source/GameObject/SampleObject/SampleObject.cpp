@@ -17,7 +17,8 @@ void SampleObject::Initialize()
 	__super::Initialize();
 
 	// ‰æ‘œ‚Ì“Ç‚İ‚İ
-	loaded_sprite_handle = LoadGraph(_T("Resources/Images/collon_wait.bmp"));
+	loaded_sprite_handle = LoadGraph(_T("Resources/Images/collon_wait_a.bmp"));
+	printfDx("load:%d", loaded_sprite_handle);
 }
 
 void SampleObject::Update(float delta_seconds)

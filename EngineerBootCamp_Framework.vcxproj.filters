@@ -19,6 +19,9 @@
     <Filter Include="Source\GameObject\SampleObject">
       <UniqueIdentifier>{067aa7eb-156d-43ad-85b0-815fca504c68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject\Character">
+      <UniqueIdentifier>{9268646b-8f3f-4ed3-a49a-49136da5d8c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -42,6 +45,7 @@
     <ClCompile Include="Source\GameObject\SampleObject\SampleObject.cpp">
       <Filter>Source\GameObject\SampleObject</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObject\Character\Character.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SystemTypes.h">
@@ -65,5 +69,6 @@
     <ClInclude Include="Source\GameObject\SampleObject\SampleObject.h">
       <Filter>Source\GameObject\SampleObject</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GameObject\Character\Character.h" />
   </ItemGroup>
 </Project>
