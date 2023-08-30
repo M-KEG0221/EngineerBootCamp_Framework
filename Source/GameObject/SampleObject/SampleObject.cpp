@@ -9,7 +9,7 @@ SampleObject::SampleObject()
 
 SampleObject::~SampleObject()
 {
-	Finalize();
+	//Finalize();
 }
 
 void SampleObject::Initialize()

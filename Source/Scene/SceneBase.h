@@ -94,7 +94,7 @@ public:
 	 */
 	void DestroyAllObjects();
 
-private:
+protected:
 	// シーンで生成したオブジェクト
 	std::vector<class GameObject*> objects;//ポインタを受け取る（シャローコピー）
 

@@ -13,7 +13,7 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	Finalize();
+	//Finalize();
 }
 
 void SceneManager::Initialize()

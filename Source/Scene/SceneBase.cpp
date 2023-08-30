@@ -9,7 +9,7 @@ SceneBase::SceneBase()
 
 SceneBase::~SceneBase()
 {
-	Finalize();
+	//Finalize();
 }
 
 void SceneBase::Initialize()

@@ -1,6 +1,6 @@
 #include "SampleScene.h"
 #include "../../SystemTypes.h"
-#include "../../GameObject/Character/Character.h"
+#include "../../GameObject/Character/Player/Player.h"
 #include "../../GameObject/SampleObject/SampleObject.h"
 
 SampleScene::SampleScene()
@@ -14,7 +14,7 @@ void SampleScene::Initialize()
 
 	// SampleObjectÇê∂ê¨
 	//CreateObject<SampleObject>(Vector2D(SCREEN_RESOLUTION_X / 2.0f, SCREEN_RESOLUTION_Y / 2.0f));
-	CreateObject<Character>(Vector2D(SCREEN_RESOLUTION_X / 2.0f, SCREEN_RESOLUTION_Y / 2.0f));
+	CreateObject<Player>(Vector2D(SCREEN_RESOLUTION_X / 2.0f, SCREEN_RESOLUTION_Y / 2.0f));
 }
 
 SceneType SampleScene::Update(float delta_seconds)

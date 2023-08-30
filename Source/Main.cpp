@@ -3,6 +3,7 @@
 #include "SystemTypes.h"
 #include "Scene/SceneManager.h"
 
+
 // プログラムは WinMain から始まります
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -35,6 +36,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// SceneManagerの更新
 		scene_manager->Update(delta_seconds);
+
+		// sleepで1/60経つまで待つ
+		//printfDx("^^\n");
+		//sleep(1);
+		//Sleep(1000);
+		Sleep(1000 / 60);
 	}
 
 	// SceneManagerの破棄

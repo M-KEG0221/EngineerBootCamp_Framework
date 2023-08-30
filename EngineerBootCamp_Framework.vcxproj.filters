@@ -46,6 +46,7 @@
       <Filter>Source\GameObject\SampleObject</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject\Character\Character.cpp" />
+    <ClCompile Include="Source\GameObject\Character\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SystemTypes.h">
@@ -70,5 +71,6 @@
       <Filter>Source\GameObject\SampleObject</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject\Character\Character.h" />
+    <ClInclude Include="Source\GameObject\Character\Player\Player.h" />
   </ItemGroup>
 </Project>

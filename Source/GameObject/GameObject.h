@@ -69,12 +69,13 @@ public:
 	 */
 	void SetDrawSortPriority(int new_priority);
 
+protected:
+	// 位置
+	Vector2D position;
+
 private:
 	// オーナーとなるシーン
 	class SceneBase* owner_scene;
-
-	// 位置
-	Vector2D position;
 
 	// 描画順。数値が小さい順から描画を行う
 	int draw_sort_priority;
