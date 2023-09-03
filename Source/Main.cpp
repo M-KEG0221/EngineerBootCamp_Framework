@@ -3,6 +3,7 @@
 #include "SystemTypes.h"
 #include "Scene/SceneManager.h"
 
+const int looptime = 1000 / 60;
 
 // ÉvÉçÉOÉâÉÄÇÕ WinMain Ç©ÇÁénÇ‹ÇËÇ‹Ç∑
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -41,7 +42,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//printfDx("^^\n");
 		//sleep(1);
 		//Sleep(1000);
-		Sleep(1000 / 60);
+		if (GetNowCount() - current_frame_time < looptime)
+		{
+			Sleep(GetNowCount() - current_frame_time + looptime);
+		}
 	}
 
 	// SceneManagerÇÃîjä¸
