@@ -1,11 +1,16 @@
 #include "Player.h"
+#include "../Character.h"
 
 #include "DxLib.h"
 
-Player::Player()
-	:graphicIdleFlame(0)
-	//graphicHandleIdle(maxIdleFlame)
+enum class Player::PlayerState
 {
+	IDLE, RUN,
+};
+
+Player::Player()
+{
+	current_direction_state = DirectionState::RIGHT;
 }
 
 Player::~Player()
@@ -19,8 +24,8 @@ void Player::Initialize()
 
 	// 画像の読み込み
 	// HACK: グラフィックマネージャーを作ったら直す
-	LoadDivGraph(_T("Resources/Images/collon_wait_a.bmp"), maxIdleFlame, maxIdleFlame, 1, 128, 128, graphicHandleIdle);
-	LoadDivGraph(_T("Resources/Images/collon_run8.bmp"), maxRunFlame, 4, 2, 128, 128, graphicHandleRun);
+	LoadDivGraph(_T("Resources/Images/collon_wait_a.bmp"), max_idle_flame, max_idle_flame, 1, 128, 128, graphic_handle_idle);
+	LoadDivGraph(_T("Resources/Images/collon_run8.bmp"), max_run_flame, 4, 2, 128, 128, graphic_handle_run);
 }
 
 void Player::Update(float delta_seconds)
@@ -33,34 +38,84 @@ void Player::Update(float delta_seconds)
 	{
 		input_dir.x = -1;
 		ChangePlayerState(PlayerState::RUN);
-		SetDirectionState(DirectionState::LEFT);
+		SetCurrentDirectionState(DirectionState::LEFT);
 	}
 	else if (CheckHitKey(KEY_INPUT_D) == 1)
 	{
 		input_dir.x = 1;
 		ChangePlayerState(PlayerState::RUN);
-		SetDirectionState(DirectionState::RIGHT);
+		SetCurrentDirectionState(DirectionState::RIGHT);
 	}
 	else
 	{
 		ChangePlayerState(PlayerState::IDLE);
-		hp--;
+		//hp--;
 	}
 
 	/*if (CheckHitKey(KEY_INPUT_W) == 1)
 	{
 		//TODO: jump
-		input_dir.y = -1; 
+		input_dir.y = -1;
 	}
 	else if (CheckHitKey(KEY_INPUT_S) == 1)
 	{
 		// NOTE: しゃがみ？すり抜け床で使用
-		input_dir.y = 1; 
+		input_dir.y = 1;
 	}*/
+
+	UpdateAnimation();
 
 	const float MOVEMENT_SPEED = 300.0f;
 	Vector2D delta_position = input_dir.Normalize() * MOVEMENT_SPEED * delta_seconds;
 	SetPosition(GetPosition() + delta_position);
+}
+
+void Player::UpdateAnimation()
+{
+	// NOTE: このままだとキーを反転しても途中のflameから描画されるため注意
+
+	// 画像の描画
+	boolean canMoveNextWinkFlame = (idle_flame_adjust - idle_flame_delay) % wink_flame_delay == 0;
+
+	switch (GetCuurentPlayerState())
+	{
+	case PlayerState::IDLE:
+
+		if (idle_flame_adjust >= idle_flame_delay && canMoveNextWinkFlame)//120fたったら瞬きモーションに入る。5fごとにフレームを動かす
+		{
+			graphic_idle_flame++;
+			//printfDx("@@\n");
+		}
+		if (graphic_idle_flame == max_idle_flame)//最後の瞬きモーションが終わったらリセットする
+		{
+			idle_flame_adjust = 0;
+			graphic_idle_flame = 0;
+			//printfDx("リセット\n");
+		}
+
+		idle_flame_adjust++;
+
+		graphic_handle = graphic_handle_idle[graphic_idle_flame];
+
+		break;
+
+	case PlayerState::RUN:
+		if (run_flame_adjust == run_flame_delay)//一定f立ったら次のモーションに移る
+		{
+			run_flame_adjust = 0;
+			graphic_run_flame++;
+		}
+		if (graphic_run_flame == max_run_flame)//最後のモーションが終わったらリセットする
+		{
+			graphic_run_flame = 0;
+		}
+
+		run_flame_adjust++;
+
+		graphic_handle = graphic_handle_run[graphic_run_flame];
+
+		break;
+	}
 }
 
 void Player::Draw(const Vector2D& screen_offset)
@@ -70,61 +125,15 @@ void Player::Draw(const Vector2D& screen_offset)
 	// 画像の描画
 	int x, y;
 	GetPosition().ToInt(x, y);
-	boolean canMoveNextWinkFlame = (idleFlameAdjust - idleFlameDelay) % winkFlameDelay == 0;
 
-	switch (getState())
+	//左右反転処理
+	if (GetCurrentDirectionState() == DirectionState::LEFT)
 	{
-	case PlayerState::IDLE:
-
-		if (idleFlameAdjust >= idleFlameDelay && canMoveNextWinkFlame)//120fたったら瞬きモーションに入る。5fごとにフレームを動かす
-		{
-			graphicIdleFlame++;
-			//printfDx("@@\n");
-		}
-		if (graphicIdleFlame == maxIdleFlame)//最後の瞬きモーションが終わったらリセットする
-		{
-			idleFlameAdjust = 0;
-			graphicIdleFlame = 0;
-			//printfDx("リセット\n");
-		}
-
-		idleFlameAdjust++;
-		//DrawGraph(x, y, graphicHandleIdle[graphicIdleFlame], true);
-		if (getHorizontalDirectionState() == DirectionState::LEFT)
-		{
-			DrawTurnGraph(x, y, graphicHandleIdle[graphicIdleFlame], true);
-		}
-		else if (getHorizontalDirectionState() == DirectionState::RIGHT)
-		{
-			DrawGraph(x, y, graphicHandleIdle[graphicIdleFlame], true);
-		}
-		break;
-
-	case PlayerState::RUN:
-		if (runFlameAdjust == runFlameDelay)//10f立ったら次のモーションに移る
-		{
-			runFlameAdjust = 0;
-			graphicRunFlame++;
-		}
-		if (graphicRunFlame == maxRunFlame)//最後の瞬きモーションが終わったらリセットする
-		{
-			graphicRunFlame = 0;
-		}
-
-		runFlameAdjust++;
-
-		//左右反転処理。
-		// NOTE: ただしこのままだとキーを反転しても途中のflameから描画されるため注意
-		if (CheckHitKey(KEY_INPUT_A))
-		{
-			DrawTurnGraph(x, y, graphicHandleRun[graphicRunFlame], true);
-		}
-		else if (CheckHitKey(KEY_INPUT_D) == 1)
-		{
-			DrawGraph(x, y, graphicHandleRun[graphicRunFlame], true);
-		}
-		break;
-
+		DrawTurnGraph(x, y, graphic_handle, true);
+	}
+	else if (GetCurrentDirectionState() == DirectionState::RIGHT)
+	{
+		DrawGraph(x, y, graphic_handle, true);
 	}
 
 }
@@ -133,7 +142,14 @@ void Player::Finalize()
 {
 	__super::Finalize();
 
-	for (int graphic : graphicHandleIdle)
+	for (int graphic : graphic_handle_idle)
+	{
+		//画像の破棄
+		DeleteGraph(graphic);
+		graphic = 0;
+	}
+
+	for (int graphic : graphic_handle_run)
 	{
 		//画像の破棄
 		DeleteGraph(graphic);
@@ -143,9 +159,9 @@ void Player::Finalize()
 
 void Player::ChangePlayerState(PlayerState s)
 {
-	//OnLeavePlayerState(currentPlayerState);
-	currentPlayerState = s;
-	OnEnterPlayerState(s);
+	OnLeavePlayerState(current_player_state);
+	current_player_state = s;
+	OnEnterPlayerState(current_player_state);
 }
 
 void Player::OnEnterPlayerState(PlayerState s)

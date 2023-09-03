@@ -3,6 +3,7 @@
 #include "DxLib.h"
 
 Character::Character()
+	:graphic_handle(0)
 {
 }
 
@@ -30,6 +31,6 @@ void Character::Draw(const Vector2D& screen_offset)
 void Character::Finalize()
 {
 	__super::Finalize();
-	 //‰æ‘œ‚Ì”jŠü
-
+	//‰æ‘œ‚Ì”jŠü
+	graphic_handle = 0;
 }

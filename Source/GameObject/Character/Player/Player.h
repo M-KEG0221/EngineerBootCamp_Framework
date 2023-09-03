@@ -9,14 +9,10 @@
  */
 class Player : public Character
 {
-	enum class PlayerState
-	{
+	enum class PlayerState;
+	/*{
 		IDLE, RUN,
-	};
-	enum class DirectionState
-	{
-		LEFT, RIGHT,
-	};
+	};*/
 
 public:
 	Player();
@@ -29,33 +25,32 @@ public:
 	void Draw(const Vector2D& screen_offset) override;
 	void Finalize() override;
 	//~ End GameObject interface
-	PlayerState getState() const { return currentPlayerState; }
-	DirectionState getHorizontalDirectionState() const { return currentDirectionState; }
+
+	void UpdateAnimation() override;
+
+	PlayerState GetCuurentPlayerState() const { return current_player_state; }
+	//PlayerDirectionState getHorizontalDirectionState() const { return currentDirectionState; }
 
 private:
 	//IDLE状態アニメーション情報
-	const static int maxIdleFlame = 4;
-	const static int idleFlameDelay = 120;// まばたきアニメーションに入るまでの時間
-	const static int winkFlameDelay = 5;// まばたきアニメーション間の時間
-	int idleFlameAdjust = 0;// delayかけてフレーム遷移するための値
-	int graphicHandleIdle[maxIdleFlame] = { 0,0,0,0 };
-	int graphicIdleFlame = 0;
+	const static int max_idle_flame = 4;
+	const static int idle_flame_delay = 120;// まばたきアニメーションに入るまでの時間
+	const static int wink_flame_delay = 5;// まばたきアニメーション間の時間
+	int idle_flame_adjust = 0;// delayかけてフレーム遷移するための値
+	int graphic_handle_idle[max_idle_flame] = { 0,0,0,0 };
+	int graphic_idle_flame = 0;
 
 	//RUN状態アニメーション情報
-	const static int maxRunFlame = 8;
-	const static int runFlameDelay = 3;// 次の走りフレームに入るまでの時間
-	int runFlameAdjust = 0;// delayかけてフレーム遷移するための値
-	int graphicHandleRun[maxRunFlame] = { 0,0,0,0 };
-	int graphicRunFlame = 0;
+	const static int max_run_flame = 8;
+	const static int run_flame_delay = 3;// 次の走りフレームに入るまでの時間
+	int run_flame_adjust = 0;// delayかけてフレーム遷移するための値
+	int graphic_handle_run[max_run_flame] = { 0,0,0,0 };
+	int graphic_run_flame = 0;
 
 	//playerState関係
-	PlayerState currentPlayerState;
+	PlayerState current_player_state;
 	void ChangePlayerState(PlayerState s);
 	void OnEnterPlayerState(PlayerState s);
 	void OnLeavePlayerState(PlayerState s);
-
-	//キャラの向き関係
-	DirectionState currentDirectionState = DirectionState::RIGHT;
-	void SetDirectionState(DirectionState hds) { currentDirectionState = hds; }
 };
 

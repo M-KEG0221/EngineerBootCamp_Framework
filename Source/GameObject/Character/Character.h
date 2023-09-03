@@ -5,11 +5,12 @@
  * キャラクター
  * サンプル用に簡易的に実装
  */
-class Character : public GameObject
+class Character abstract : public GameObject
 {
-	enum class playerState
+protected:
+	enum class DirectionState
 	{
-		IDLE, RUN,
+		LEFT, RIGHT,
 	};
 
 public:
@@ -24,13 +25,20 @@ public:
 	virtual void Finalize() override;
 	//~ End Character interface
 
-	void applyDamage(int damage) {};
-
+	DirectionState GetCurrentDirectionState() { return current_direction_state; }
 
 protected:
 	int hp;
 	int graphic_handle;
+
+	//キャラの向き関係
+	DirectionState current_direction_state;
+	void SetCurrentDirectionState(DirectionState d) { current_direction_state = d; }
+
+	void ApplyDamage(int damage) {};
+	virtual void UpdateAnimation() {};
+	virtual void OnDamaged(int damage) {};
 private:
-	virtual void onDamaged(int damage) {};
+	//virtual void onDamaged(int damage) {};
 };
 
