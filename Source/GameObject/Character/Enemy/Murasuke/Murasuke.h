@@ -4,7 +4,7 @@ class Murasuke :public Enemy
 {
 public:
 	Murasuke();
-	virtual ~Murasuke();
+	~Murasuke();
 public:
 	//~ Begin GameObject interface
 	void Initialize() override;

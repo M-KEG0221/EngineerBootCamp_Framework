@@ -1,12 +1,6 @@
 #include "Murasuke.h"
-//#include "../Character.h"
-
+#include "../../../../SystemTypes.h"
 #include "DxLib.h"
-
-//enum class Murasuke::MurasukeState
-//{
-//	IDLE, RUN,
-//};
 
 Murasuke::Murasuke()
 {
@@ -35,45 +29,21 @@ void Murasuke::Update(float delta_seconds)
 
 	// “®‚©‚·
 	Vector2D input_dir;
-	if (CheckHitKey(KEY_INPUT_A) == 1)
-	{
-		input_dir.x = -1;
-		ChangeEnemyState(EnemyState::RUN);
-		SetCurrentDirectionState(DirectionState::LEFT);
-	}
-	else if (CheckHitKey(KEY_INPUT_D) == 1)
-	{
-		input_dir.x = 1;
-		ChangeEnemyState(EnemyState::RUN);
-		SetCurrentDirectionState(DirectionState::RIGHT);
-	}
-	else
-	{
-		//ChangeEnemyState(EnemyState::IDLE);
-		//hp--;
-	}
 
-	/*if (CheckHitKey(KEY_INPUT_W) == 1)
-	{
-		//TODO: jump
-		input_dir.y = -1;
-	}
-	else if (CheckHitKey(KEY_INPUT_S) == 1)
-	{
-		// NOTE: ‚µ‚á‚ª‚İH‚·‚è”²‚¯°‚Åg—p
-		input_dir.y = 1;
-	}*/
+	input_dir.x = -1;
+	ChangeEnemyState(EnemyState::RUN);
+	SetCurrentDirectionState(DirectionState::LEFT);
 
 	UpdateAnimation();
 
-	const float MOVEMENT_SPEED = 300.0f;
+	const float MOVEMENT_SPEED = 30.0f;
 	Vector2D delta_position = input_dir.Normalize() * MOVEMENT_SPEED * delta_seconds;
 	SetPosition(GetPosition() + delta_position);
 }
 
+// ‰æ‘œ‚Ì•`‰æİ’è
 void Murasuke::UpdateAnimation()
 {
-	// ‰æ‘œ‚Ì•`‰æ
 	switch (GetCurrentEnemyState())
 	{
 	case EnemyState::IDLE:
@@ -117,6 +87,12 @@ void Murasuke::Draw(const Vector2D& screen_offset)
 	else if (GetCurrentDirectionState() == DirectionState::LEFT)
 	{
 		DrawGraph(x, y, graphic_handle, true);
+	}
+
+	if (x < -50)
+	{
+		Vector2D new_position = Vector2D(SCREEN_RESOLUTION_X, y);
+		SetPosition(new_position);
 	}
 }
 
