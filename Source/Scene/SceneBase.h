@@ -11,6 +11,10 @@
 enum class SceneType : unsigned short
 {
 	SAMPLE_SCENE,
+	SAMPLE_MAP_SCENE,
+	TITLE_SCENE,
+	GAME_SCENE,
+	RESULT_SCENE,
 };
 
 /**
@@ -35,7 +39,7 @@ public:
 	 */
 	virtual SceneType Update(float delta_seconds);
 
-	/** 
+	/**
 	 * •`‰æ
 	 */
 	virtual void Draw();

@@ -5,6 +5,7 @@
 
 #include "SceneBase.h"
 #include "SampleScene/SampleScene.h"
+#include "SampleMap/SampleMapScene.h"
 
 SceneManager::SceneManager()
 	: current_scene(nullptr)
@@ -19,7 +20,8 @@ SceneManager::~SceneManager()
 void SceneManager::Initialize()
 {
 	// 開始シーンをSAMPLE_SCENEに設定
-	ChangeScene(SceneType::SAMPLE_SCENE);
+	//ChangeScene(SceneType::SAMPLE_SCENE);
+	ChangeScene(SceneType::SAMPLE_MAP_SCENE);
 	// 今後はここをTitleSceneに置き換える
 }
 
@@ -87,7 +89,11 @@ SceneBase* SceneManager::CreateScene(SceneType new_scene_type)
 {
 	switch (new_scene_type)
 	{
-	case SceneType::SAMPLE_SCENE:	return new SampleScene();
+	case SceneType::SAMPLE_SCENE:		return new SampleScene();
+	case SceneType::SAMPLE_MAP_SCENE:	return new SampleMapScene();
+		//case SceneType::TITLE_SCENE:		return new TitleScene();
+		//case SceneType::GAME_SCENE:			return new GameScene();
+		//case SceneType::RESULT_SCENE:		return new ResultScene();
 	default:					return nullptr;
 	}
 }
