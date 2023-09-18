@@ -3,7 +3,7 @@
 #include "BoxCollisionParams.h"
 #include "Vector2D.h"
 
-
+//FIXME: ‰¡ˆÚ“®‚µ‚Ä‚é“G‚ÆÚ‚µ‘±‚¯‚é‚Æã‰ºˆÚ“®‚ª‚Å‚«‚È‚¢•°or“Vˆä‚ÆÚ‚·‚éó‘Ô‚Å‰ºorã“ü—Í‚µ‚È‚ª‚ç‰¡ˆÚ“®‚ª‚Å‚«‚È‚¢
 BoxCollisionParams::BoxCollisionParams(CollisionObjectType collision_object_type, CollisionType collision_type, Vector2D box_extent)
 	:
 	collision_object_type(collision_object_type),
