@@ -18,7 +18,19 @@ void GameObject::SetPosition(const Vector2D& new_position)
 	position = new_position;
 }
 
+void GameObject::SetOldPosition(const Vector2D& new_old_position)
+{
+	old_position = new_old_position;
+}
+
 void GameObject::SetDrawSortPriority(int new_priority)
 {
 	draw_sort_priority = new_priority;
 }
+
+//void GameObject::OnHitBoxCollision(const GameObject* hit_object, const BoxCollisionParams& hit_collision_params)
+//{
+//	BoxHitResult result = GetBodyCollision()->HitCheckTarget(hit_collision_params);
+//
+//	printfDx("hit\n");
+//}

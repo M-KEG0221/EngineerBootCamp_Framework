@@ -10,7 +10,7 @@ class Ground :
 {
 public:
 	Ground();
-	Ground(int width, int height);
+	Ground(vector<int> stage_data, int width, int height);
 	~Ground();
 
 	//~ Begin GameObject interface
@@ -21,7 +21,10 @@ public:
 	//~ End GameObject interface
 
 	void SetGroundData(const vector<int>& new_ground_data) { ground_data = new_ground_data; };
+
+	vector<BoxCollisionParams*> GetGroundCollisions() { return ground_collisions; }
 protected:
+	vector<BoxCollisionParams*> ground_collisions;
 private:
 	vector<int> ground_data;
 	int stage_width;

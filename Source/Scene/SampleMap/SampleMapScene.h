@@ -45,7 +45,7 @@ protected:
 		1,1,1,1,1,
 	};
 private:
-	Ground* stage;
+	//Ground* stage = nullptr;
 
 	/**
 	* @param filename csvファイルのパス？

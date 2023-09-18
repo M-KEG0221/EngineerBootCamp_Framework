@@ -19,7 +19,7 @@ void SampleScene::Initialize()
 	//CreateObject<SampleObject>(Vector2D(SCREEN_RESOLUTION_X / 2.0f, SCREEN_RESOLUTION_Y / 2.0f));
 	CreateObject<Player>(Vector2D(SCREEN_RESOLUTION_X / 2.0f, SCREEN_RESOLUTION_Y / 2.0f));
 	CreateObject<Murasuke>(Vector2D(SCREEN_RESOLUTION_X / 2.0f, SCREEN_RESOLUTION_Y / 3.0f));
-	CreateObject<Ground>(Vector2D(SCREEN_RESOLUTION_X / 3.0f, SCREEN_RESOLUTION_Y / 3.0f));
+	/*CreateObject<Ground>(Vector2D(SCREEN_RESOLUTION_X / 3.0f, SCREEN_RESOLUTION_Y / 3.0f));*/
 }
 
 SceneType SampleScene::Update(float delta_seconds)

@@ -4,6 +4,7 @@
 #include <string>
 #include "../Utility/Vector2D.h"
 #include "../GameObject/GameObject.h"
+#include "../Source/GameObject/Ground/Ground.h"
 
 /**
  * シーンタイプ
@@ -98,10 +99,15 @@ public:
 	 */
 	void DestroyAllObjects();
 
+	bool CheckBoxCollision(GameObject* target, const BoxCollisionParams& collision_params, BoxCollisionParams& hit_collision_params);
+
 protected:
 	// シーンで生成したオブジェクト
 	std::vector<class GameObject*> objects;//ポインタを受け取る（シャローコピー）
 
 	// スクロール用スクリーンオフセット
 	Vector2D screen_offset;
+
+	//ステージデータ
+	Ground* stage = nullptr;
 };

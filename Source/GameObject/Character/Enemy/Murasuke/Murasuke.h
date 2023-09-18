@@ -14,6 +14,7 @@ public:
 	//~ End GameObject interface
 
 	void UpdateAnimation() override;
+	//void OnHitBoxCollision(const GameObject* hit_object, const BoxCollisionParams& hit_collision_params);
 
 private:
 	//IDLE状態アニメーション情報

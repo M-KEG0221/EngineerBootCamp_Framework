@@ -139,29 +139,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Utility\BoxCollisionParams.cpp" />
     <ClCompile Include="Source\GameObject\Character\Character.cpp" />
     <ClCompile Include="Source\GameObject\Character\Enemy\Enemy.cpp" />
     <ClCompile Include="Source\GameObject\Character\Enemy\Murasuke\Murasuke.cpp" />
     <ClCompile Include="Source\GameObject\Character\Player\Player.cpp" />
     <ClCompile Include="Source\GameObject\GameObject.cpp" />
+    <ClCompile Include="Source\GameObject\Ground\Ground.cpp" />
     <ClCompile Include="Source\GameObject\SampleObject\SampleObject.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Scene\SampleMap\SampleMapScene.cpp" />
     <ClCompile Include="Source\Scene\SampleScene\SampleScene.cpp" />
     <ClCompile Include="Source\Scene\SceneBase.cpp" />
     <ClCompile Include="Source\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Utility\BoxHitResult.cpp" />
     <ClCompile Include="Source\Utility\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Utility\BoxCollisionParams.h" />
     <ClInclude Include="Source\GameObject\Character\Character.h" />
     <ClInclude Include="Source\GameObject\Character\Enemy\Enemy.h" />
     <ClInclude Include="Source\GameObject\Character\Enemy\Murasuke\Murasuke.h" />
     <ClInclude Include="Source\GameObject\Character\Player\Player.h" />
     <ClInclude Include="Source\GameObject\GameObject.h" />
+    <ClInclude Include="Source\GameObject\Ground\Ground.h" />
     <ClInclude Include="Source\GameObject\SampleObject\SampleObject.h" />
+    <ClInclude Include="Source\Scene\SampleMap\SampleMapScene.h" />
     <ClInclude Include="Source\Scene\SampleScene\SampleScene.h" />
     <ClInclude Include="Source\Scene\SceneBase.h" />
     <ClInclude Include="Source\Scene\SceneManager.h" />
     <ClInclude Include="Source\SystemTypes.h" />
+    <ClInclude Include="Source\Utility\BoxHitResult.h" />
     <ClInclude Include="Source\Utility\Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

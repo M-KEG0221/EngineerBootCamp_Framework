@@ -14,40 +14,22 @@ void SampleMapScene::Initialize()
 	// 親クラスのInitialize()
 	__super::Initialize();
 
-	// SampleObjectを生成
-	//CreateObject<SampleObject>(Vector2D(SCREEN_RESOLUTION_X / 2.0f, SCREEN_RESOLUTION_Y / 2.0f));
-
+	//ステージ読み込み
 	vector<int> stage_data;
 	LoadStageCSV("hoge", stage_data);
 
-	int stage_width = SCREEN_RESOLUTION_X / 32;//20
-	int stage_height = SCREEN_RESOLUTION_Y / 32;//15
+	int stage_width = SCREEN_RESOLUTION_X / 32;//20個
+	int stage_height = SCREEN_RESOLUTION_Y / 32;//15個
 
-	stage = new Ground(SCREEN_RESOLUTION_X / 32, SCREEN_RESOLUTION_Y / 32);
-	stage->SetGroundData(stage_data);
+	stage = new Ground(stage_data, SCREEN_RESOLUTION_X / 32, SCREEN_RESOLUTION_Y / 32);
+	//stage->SetGroundData(stage_data);
+	stage->Initialize();
 	stage->SetOwnerScene(this);
 	stage->SetPosition(Vector2D(0, 0));
-	stage->Initialize();
-	objects.push_back(stage);
-
+	//ステージ読み込みここまで
 
 	CreateObject<Player>(Vector2D(SCREEN_RESOLUTION_X / 2.0f, SCREEN_RESOLUTION_Y / 2.0f));
 	CreateObject<Murasuke>(Vector2D(SCREEN_RESOLUTION_X / 2.0f, SCREEN_RESOLUTION_Y / 3.0f));
-
-	/*for (int y = 0; y < MAP_SIZE_HEIGHT; y++)
-	{
-		for (int x = 0; x < MAP_SIZE_WIDTH; x++)
-		{
-			int chip = stage_data[x];
-			if (!chip)
-			{
-				continue;
-			}
-			float chip_pos_x = (float)(chip_id % width_chip_num) * MAPCHIP_WIDTH;
-			float chip_pos_y = (float)(chip_id / height_chip_num) * MAPCHIP_HEIGHT;
-			CreateObject<Ground>
-		}
-	}*/
 
 }
 

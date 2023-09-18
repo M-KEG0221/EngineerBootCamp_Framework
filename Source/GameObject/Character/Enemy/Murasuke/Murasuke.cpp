@@ -6,6 +6,13 @@ Murasuke::Murasuke()
 {
 	current_direction_state = DirectionState::LEFT;
 	current_enemy_state = EnemyState::IDLE;
+	body_collision = new BoxCollisionParams
+	(
+		BoxCollisionParams::CollisionObjectType::ENEMY,
+		BoxCollisionParams::CollisionType::BLOCK,
+		Vector2D(32.0f, 50.0f)
+	);
+	SetDeltaPosition(Vector2D(0, 0));
 }
 
 Murasuke::~Murasuke()
@@ -26,6 +33,7 @@ void Murasuke::Initialize()
 void Murasuke::Update(float delta_seconds)
 {
 	__super::Update(delta_seconds);
+	SetOldPosition(GetPosition());
 
 	// “®‚©‚·
 	Vector2D input_dir;
@@ -39,6 +47,9 @@ void Murasuke::Update(float delta_seconds)
 	const float MOVEMENT_SPEED = 30.0f;
 	Vector2D delta_position = input_dir.Normalize() * MOVEMENT_SPEED * delta_seconds;
 	SetPosition(GetPosition() + delta_position);
+
+	body_collision->Update(delta_seconds, GetPosition());
+	//body_collision->center_position = Vector2D(x + 0, y + 0);
 }
 
 // ‰æ‘œ‚Ì•`‰æÝ’è
@@ -71,6 +82,11 @@ void Murasuke::UpdateAnimation()
 	}
 }
 
+//void Murasuke::OnHitBoxCollision(const GameObject* hit_object, const BoxCollisionParams& hit_collision_params)
+//{
+//	__super::OnHitBoxCollision(hit_object, hit_collision_params);
+//}
+
 void Murasuke::Draw(const Vector2D& screen_offset)
 {
 	__super::Draw(screen_offset);
@@ -94,6 +110,13 @@ void Murasuke::Draw(const Vector2D& screen_offset)
 		Vector2D new_position = Vector2D(SCREEN_RESOLUTION_X, y);
 		SetPosition(new_position);
 	}
+
+	body_collision->Draw(screen_offset);
+
+	body_collision->GetCenterPosition().ToInt(x, y);
+	char str[256];
+	sprintf_s(str, sizeof(str), "x: %d, y: %d", x, y);
+	DrawString(0, 20, str, GetColor(255, 255, 255));
 }
 
 void Murasuke::Finalize()

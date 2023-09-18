@@ -30,6 +30,8 @@ public:
 protected:
 	int hp;
 	int graphic_handle;
+	const float GRAVITY = 9.8f;//“K“–
+	const float MAX_FALL_SPEED = 300.0f;//“K“–
 
 	//ƒLƒƒƒ‰‚ÌŒü‚«ŠÖŒW
 	DirectionState current_direction_state;
