@@ -358,7 +358,7 @@ void Player::OnHitBoxCollision(const GameObject* hit_object, const BoxCollisionP
 		{
 			/*is_ground = true;
 			speed_y = 0.0f;*/
-			HandleLanding()
+			HandleLanding();
 		}
 
 		body_collision->SetCenterPosition(new_position);
