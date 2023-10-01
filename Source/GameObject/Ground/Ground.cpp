@@ -131,7 +131,7 @@ void Ground::Draw(const Vector2D& screen_offset)
 					{
 						if (ground_data[two_step_up] != 1)
 						{
-							DrawGraph(draw_position_x, draw_position_y/* + GROUND_DELTA*/, ground_graphics[4], true);
+							DrawGraph(draw_position_x, draw_position_y, ground_graphics[4], true);
 						}
 						else
 						{

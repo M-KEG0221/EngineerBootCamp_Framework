@@ -18,8 +18,10 @@ void SampleMapScene::Initialize()
 	vector<int> stage_data;
 	LoadStageCSV("hoge", stage_data);
 
-	int stage_width = SCREEN_RESOLUTION_X / 32;//20個
-	int stage_height = SCREEN_RESOLUTION_Y / 32;//15個
+	//横に置けるブロックの個数
+	int stage_width_num = SCREEN_RESOLUTION_X / 32;//20個
+	//縦に置けるブロックの個数
+	int stage_height_num = SCREEN_RESOLUTION_Y / 32;//15個
 
 	stage = new Ground(stage_data, SCREEN_RESOLUTION_X / 32, SCREEN_RESOLUTION_Y / 32);
 	//stage->SetGroundData(stage_data);
@@ -59,12 +61,12 @@ void SampleMapScene::LoadStageCSV(const string& filename, vector<int>& stage_dat
 		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
 		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
 		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
-		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
+		0,0,0,0,0, 0,0,1,0,0, 0,0,0,0,0, 0,0,0,0,0,
 
-		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
-		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
-		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,
-		1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0,
+		0,0,0,0,0, 0,0,1,0,0, 0,0,0,0,0, 0,0,0,0,0,
+		0,0,0,0,0, 0,0,1,0,0, 0,0,0,0,0, 0,0,0,0,0,
+		0,0,0,0,0, 0,0,1,0,0, 0,0,0,0,0, 0,0,0,0,0,
+		1,0,0,0,0, 1,0,1,0,1, 1,0,0,0,0, 1,0,0,0,0,
 		1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1,
 	};
 

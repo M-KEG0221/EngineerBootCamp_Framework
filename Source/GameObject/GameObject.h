@@ -84,6 +84,8 @@ public:
 	BoxCollisionParams* GetBodyCollision() { return body_collision; }
 
 	virtual void OnHitBoxCollision(const GameObject* hit_object, const BoxCollisionParams& hit_collision_params) {};
+	virtual void OnNoHitBoxCollision() {};
+	void ResetHitResult() { hitResult = BoxHitResult(); }
 
 protected:
 	// 位置
@@ -94,6 +96,7 @@ protected:
 
 	//コリジョン
 	BoxCollisionParams* body_collision;
+	BoxHitResult hitResult;
 
 	//画像の描画位置とコリジョンの描画位置の差分
 	Vector2D delta_position = Vector2D(0, 0);

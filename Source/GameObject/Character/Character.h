@@ -13,6 +13,11 @@ protected:
 		LEFT, RIGHT,
 	};
 
+	enum class AnimationState
+	{
+		IDLE, RUN, JUMP, ATTACK, DAMAGED, DEAD
+	};
+
 public:
 	Character();
 	virtual ~Character();
@@ -30,8 +35,8 @@ public:
 protected:
 	int hp;
 	int graphic_handle;
-	const float GRAVITY = 9.8f;//適当
-	const float MAX_FALL_SPEED = 300.0f;//適当
+	const float GRAVITY = 1480.0f;//適当
+	const float MAX_FALL_SPEED = 1000.0f;//適当
 
 	//キャラの向き関係
 	DirectionState current_direction_state;

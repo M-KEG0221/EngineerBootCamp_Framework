@@ -25,33 +25,39 @@ SceneType SceneBase::Update(float delta_seconds)
 
 	for (auto iterator = objects.begin(); iterator != objects.end(); ++iterator)
 	{
-		bool isHit;
+		(*iterator)->ResetHitResult();
+		bool isHit = false;
 		//オブジェクトとステージのぶつかり確認
 		if (stage != nullptr)
 		{
 			for (BoxCollisionParams* ground_collision : stage->GetGroundCollisions())
 			{
-				isHit = CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *ground_collision);
-				if (isHit)
+				BoxCollisionParams object_collision = *(*iterator)->GetBodyCollision();
+				//isHit = CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *ground_collision);
+				if (CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *ground_collision))
 				{
+					isHit = true;
 					(*iterator)->OnHitBoxCollision(stage, *ground_collision);
 				}
 			}
 		}
 
-		//auto iterator2 = iterator;
-		//iterator2++;
 		//オブジェクト間のぶつかり確認
 		for (auto iterator2 = objects.begin(); iterator2 != objects.end(); ++iterator2)
 		{
 			if (*iterator != *iterator2)
 			{
-				isHit = CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *(*iterator2)->GetBodyCollision());
-				if (isHit)
+				//isHit = CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *(*iterator2)->GetBodyCollision());
+				if (CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *(*iterator2)->GetBodyCollision()))
 				{
+					isHit = true;
 					(*iterator)->OnHitBoxCollision(*iterator2, *(*iterator2)->GetBodyCollision());
 				}
 			}
+		}
+		if (!isHit)
+		{
+			(*iterator)->OnNoHitBoxCollision();
 		}
 	}
 
@@ -68,36 +74,6 @@ void SceneBase::Draw()
 	{
 		(*iterator)->Draw(screen_offset);
 	}
-
-	//for (auto iterator = objects.begin(); iterator != objects.end(); ++iterator)
-	//{
-	//	bool isHit;
-	//	//オブジェクトとステージのぶつかり確認
-	//	if (stage != nullptr)
-	//	{
-	//		for (BoxCollisionParams* ground_collision : stage->GetGroundCollisions())
-	//		{
-	//			isHit = CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *ground_collision);
-	//			if (isHit)
-	//			{
-	//				(*iterator)->OnHitBoxCollision(stage, *ground_collision);
-	//			}
-	//		}
-	//	}
-
-	//	auto iterator2 = iterator;
-	//	iterator2++;
-	//	//オブジェクト間のぶつかり確認
-	//	for (; iterator2 != objects.end(); ++iterator2)
-	//	{
-	//		isHit = CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *(*iterator2)->GetBodyCollision());
-	//		if (isHit)
-	//		{
-	//			//printfDx("object ");
-	//			(*iterator)->OnHitBoxCollision(*iterator2, *(*iterator2)->GetBodyCollision());
-	//		}
-	//	}
-	//}
 }
 
 void SceneBase::Finalize()

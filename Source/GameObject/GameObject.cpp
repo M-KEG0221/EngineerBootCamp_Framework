@@ -27,10 +27,3 @@ void GameObject::SetDrawSortPriority(int new_priority)
 {
 	draw_sort_priority = new_priority;
 }
-
-//void GameObject::OnHitBoxCollision(const GameObject* hit_object, const BoxCollisionParams& hit_collision_params)
-//{
-//	BoxHitResult result = GetBodyCollision()->HitCheckTarget(hit_collision_params);
-//
-//	printfDx("hit\n");
-//}
