@@ -1,0 +1,32 @@
+# このプロジェクトについて
+
+ヒストリア様とクリークアンドリバー様の合同で行われた『エンジニアブートキャンプ』で作成した2Dアクションゲームになります。
+https://www.creativevillage.ne.jp/category/event-list/seminar/134835/
+
+ドット絵の画像と、下記以外のファイル(Source直下のみ)はすべて自身で実装したものになります。(模範となるクラス図あり)
+- Main.cpp(一部加筆あり)
+- SystemTypes.h
+- Utility/Vector2D.h
+- Utility/Vector2D.cpp
+- Scene/SceneBase.h
+- Scene/SceneManager.h
+- Scene/SceneManager.cpp(一部加筆あり)
+- Scene/SampleScene/SampleScene.h
+- Scene/SampleScene/SampleScene.cpp(一部加筆あり)
+- GameObject/GameObject.h(一部加筆あり)
+- GameObject/GameObject.cpp
+- GameObject/SampleObject/SampleObject.h
+- GameObject/SampleObject/SampleObject.cpp(一部加筆あり)
+
+## 内容
+現在、ゲームシーン部分の作成途中となっております。
+実装内容としては以下の通りです。
+- キャラクター操作（左右移動、ジャンプ、小ジャンプ）
+- エネミー動作（一方向への移動のみ）
+- アニメーション処理
+- 重力
+- コリジョン（当たり判定、押し出し）
+
+## 起動方法
+1. VisualStudioでソリューションプロジェクトを開く
+2. 『ローカルWindowsデバッガ―』をクリックして実行
