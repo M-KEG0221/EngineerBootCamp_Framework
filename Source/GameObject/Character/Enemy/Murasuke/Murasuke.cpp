@@ -52,7 +52,7 @@ void Murasuke::Update(float delta_seconds)
 	//body_collision->center_position = Vector2D(x + 0, y + 0);
 }
 
-// 画像の描画設定
+// ????`????
 void Murasuke::UpdateAnimation()
 {
 	switch (GetCurrentEnemyState())
@@ -64,12 +64,12 @@ void Murasuke::UpdateAnimation()
 		break;
 
 	case EnemyState::RUN:
-		if (run_flame_adjust == run_flame_delay)//一定f立ったら次のモーションに移る
+		if (run_flame_adjust == run_flame_delay)//???f????????????[?V????????
 		{
 			run_flame_adjust = 0;
 			graphic_run_flame++;
 		}
-		if (graphic_run_flame == max_run_flame)//最後のモーションが終わったらリセットする
+		if (graphic_run_flame == max_run_flame)//??????[?V???????I????????Z?b?g????
 		{
 			graphic_run_flame = 0;
 		}
@@ -91,11 +91,11 @@ void Murasuke::Draw(const Vector2D& screen_offset)
 {
 	__super::Draw(screen_offset);
 
-	// 画像の描画
+	// ????`??
 	int x, y;
 	GetPosition().ToInt(x, y);
 
-	//左右反転処理
+	//???E???]????
 	if (GetCurrentDirectionState() == DirectionState::RIGHT)
 	{
 		DrawTurnGraph(x, y, graphic_handle, true);
@@ -125,14 +125,14 @@ void Murasuke::Finalize()
 
 	for (int graphic : graphic_handle_idle)
 	{
-		//画像の破棄
+		//????j??
 		DeleteGraph(graphic);
 		graphic = 0;
 	}
 
 	for (int graphic : graphic_handle_run)
 	{
-		//画像の破棄
+		//????j??
 		DeleteGraph(graphic);
 		graphic = 0;
 	}

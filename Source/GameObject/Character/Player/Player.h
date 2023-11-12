@@ -34,6 +34,7 @@ public:
 private:
 	bool is_ground = false;
 	bool is_jumping = false;
+	float jumping_seconds = 0.0f;
 	const float MOVEMENT_SPEED = 300.0f;
 
 	//IDLE状態アニメーション情報
@@ -57,7 +58,7 @@ private:
 	//JUPM状態アニメーション情報
 	const static int max_jump_flame = 6;//各種類ごとのフレーム
 	const int jump_flame_delay = 3;
-	const int jump_flame_branch = 150;// 次のジャンプフレームに入る起点となる速度
+	const int jump_flame_branch_speed = 150;// 次のジャンプフレームに入る起点となる速度
 	int jump_flame_point;//各ジャンプ画像の起点（0, 2, 4）
 	bool toggle_jump_image = 0;//各ジャンプの画像を切り替える
 	int jump_flame_adjust = 0;// delayかけてフレーム遷移するための値

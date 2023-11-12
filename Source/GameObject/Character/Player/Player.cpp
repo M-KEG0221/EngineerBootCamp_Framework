@@ -49,6 +49,7 @@ void Player::Initialize()
 
 void Player::Update(float delta_seconds)
 {
+
 	__super::Update(delta_seconds);
 
 	/*if (!is_ground)
@@ -95,10 +96,30 @@ void Player::Update(float delta_seconds)
 		if (is_ground)
 		{
 			is_ground = false;
+			is_jumping = true;
 			ChangePlayerState(PlayerState::JUMP);
-			speed_y = jump_inital_speed;//TODO: wキーを押した時間だけ掛け算する。（initalも合わせて修正する）
+			speed_y = jump_inital_speed;
+		}
+
+		//TODO: wキーを押した時間だけ掛け算する。（initalも合わせて修正する）
+		printfDx("%f+%f=%f\n", jumping_seconds, delta_seconds, jumping_seconds + delta_seconds);
+		printfDx("%d%d%d%d: %d\n", is_jumping, !is_ground, jumping_seconds < 1, speed_y < -500.0f,
+			is_jumping && !is_ground && jumping_seconds < 0.01 && speed_y < -500.0f);
+
+		if (is_jumping && !is_ground && jumping_seconds < 0.01/* && speed_y > -500.0f*/)
+		{
+			jumping_seconds += delta_seconds;
+			speed_y -= GRAVITY * delta_seconds;
+			printfDx("押してるよ～！！\n");
 		}
 	}
+	else if (is_jumping && speed_y < -500.0f)
+	{
+		printfDx("STOP！！\n");
+		jumping_seconds = 1.0f;
+		speed_y = -500.0f;
+	}
+	printfDx("%d%d: %d\n", is_jumping, speed_y < -9 * 100.0f, is_jumping && speed_y < -9 * 100.0f);
 	//else if (CheckHitKey(KEY_INPUT_S) == 1)
 	if (CheckHitKey(KEY_INPUT_S) == 1)
 	{
@@ -112,8 +133,8 @@ void Player::Update(float delta_seconds)
 	if (!is_ground)
 	{
 		delta_position.y = delta_position.y + speed_y * delta_seconds;
-		speed_y = speed_y + GRAVITY * delta_seconds;
-		if (speed_y >= MAX_FALL_SPEED)
+		speed_y += GRAVITY * delta_seconds;
+		if (speed_y > MAX_FALL_SPEED)
 		{
 			speed_y = MAX_FALL_SPEED;
 		}
@@ -175,16 +196,16 @@ void Player::UpdateAnimation()
 
 		break;
 	case PlayerState::JUMP:
-		if (speed_y < -jump_flame_branch)
+		if (speed_y < -jump_flame_branch_speed)
 		{
 			jump_flame_point = 0;
 
 		}
-		else if (-jump_flame_branch <= speed_y && speed_y < jump_flame_branch)
+		else if (-jump_flame_branch_speed <= speed_y && speed_y < jump_flame_branch_speed)
 		{
 			jump_flame_point = 2;
 		}
-		else if (speed_y >= jump_flame_branch)
+		else if (speed_y >= jump_flame_branch_speed)
 		{
 			jump_flame_point = 4;
 		}
@@ -231,6 +252,10 @@ void Player::Draw(const Vector2D& screen_offset)
 	char str[256];
 	sprintf_s(str, sizeof(str), "x: %d, y: %d", x, y);
 	DrawString(0, 0, str, GetColor(255, 255, 255));
+
+	sprintf_s(str, sizeof(str), "speed: %f", speed_y);
+	DrawString(200, 0, str, GetColor(0, 0, 255));
+	//printfDx("%f\n", speed_y);
 }
 
 void Player::Finalize()
@@ -439,6 +464,7 @@ void Player::HandleLanding()
 {
 	is_ground = true;
 	is_jumping = false;
+	jumping_seconds = 0.0f;
 	speed_y = 0.0f;
 
 }
@@ -447,5 +473,5 @@ void Player::OnNoHitBoxCollision()
 {
 	is_ground = false;
 	ChangePlayerState(PlayerState::JUMP);
-	printfDx("NO");
+	printfDx("NO\n");
 }
