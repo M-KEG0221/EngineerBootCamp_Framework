@@ -9,7 +9,7 @@ SceneBase::SceneBase()
 
 SceneBase::~SceneBase()
 {
-	//Finalize();
+	// Finalize();
 }
 
 void SceneBase::Initialize()
@@ -18,7 +18,8 @@ void SceneBase::Initialize()
 
 SceneType SceneBase::Update(float delta_seconds)
 {
-	for (auto iterator = objects.begin(); iterator != objects.end(); ++iterator)// autoは自動型推論
+	// hack:　ここら辺はGameSceneに移す？
+	for (auto iterator = objects.begin(); iterator != objects.end(); ++iterator) // autoは自動型推論
 	{
 		(*iterator)->Update(delta_seconds);
 	}
@@ -27,31 +28,38 @@ SceneType SceneBase::Update(float delta_seconds)
 	{
 		(*iterator)->ResetHitResult();
 		bool isHit = false;
-		//オブジェクトとステージのぶつかり確認
+
+		// オブジェクトとステージのぶつかり確認
 		if (stage != nullptr)
 		{
-			for (BoxCollisionParams* ground_collision : stage->GetGroundCollisions())
+			for (BoxCollisionParams *ground_collision : stage->GetGroundCollisions())
 			{
-				BoxCollisionParams object_collision = *(*iterator)->GetBodyCollision();
-				//isHit = CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *ground_collision);
 				if (CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *ground_collision))
 				{
 					isHit = true;
 					(*iterator)->OnHitBoxCollision(stage, *ground_collision);
 				}
+				// }
 			}
 		}
 
-		//オブジェクト間のぶつかり確認
+		// オブジェクト間のぶつかり確認
 		for (auto iterator2 = objects.begin(); iterator2 != objects.end(); ++iterator2)
 		{
 			if (*iterator != *iterator2)
 			{
-				//isHit = CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *(*iterator2)->GetBodyCollision());
-				if (CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *(*iterator2)->GetBodyCollision()))
+				// todo: iteratorのbodyと、iteratorの全コリジョンを比較するように変更する
+				auto target_collisions = (*iterator2)->GetCollisions();
+
+				for (auto collision_map = target_collisions.begin(); collision_map != target_collisions.end(); ++collision_map)
 				{
-					isHit = true;
-					(*iterator)->OnHitBoxCollision(*iterator2, *(*iterator2)->GetBodyCollision());
+					if (CheckBoxCollision((*iterator), *(*iterator)->GetBodyCollision(), *collision_map->second))
+					{
+						isHit = true;
+						// todo: 上記noteの処理は実装したので、ここを実装する
+						// (*iterator)->OnHitBoxCollision(*iterator2, *(*iterator2)->GetBodyCollision());
+						(*iterator)->OnHitBoxCollision(*iterator2, *collision_map->second);
+					}
 				}
 			}
 		}
@@ -82,7 +90,7 @@ void SceneBase::Finalize()
 	DestroyAllObjects();
 }
 
-void SceneBase::DestroyObject(GameObject* object)
+void SceneBase::DestroyObject(GameObject *object)
 {
 	if (object == nullptr)
 	{
@@ -121,7 +129,8 @@ void SceneBase::DestroyAllObjects()
 	objects.clear();
 }
 
-bool SceneBase::CheckBoxCollision(GameObject* target, const BoxCollisionParams& collision_params, BoxCollisionParams& hit_collision_params)
+bool SceneBase::CheckBoxCollision(GameObject *target, const BoxCollisionParams &collision_params, BoxCollisionParams &hit_collision_params)
 {
+	// todo: collision_paramsがableの時のみ処理する
 	return collision_params.IsHitCheckTarget(hit_collision_params);
 }

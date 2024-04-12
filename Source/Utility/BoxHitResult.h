@@ -11,7 +11,8 @@ struct BoxHitResult
 	bool is_touch_top_side = false;
 	bool is_touch_under_side = false;
 
-	bool IsHit() {
+	bool IsHit()
+	{
 		return is_hit_left_side
 			|| is_hit_right_side
 			|| is_hit_top_side
@@ -25,4 +26,3 @@ struct BoxHitResult
 	bool IsTouchVerticalSide() { return is_touch_under_side || is_touch_top_side; }
 	bool IsTouchHorizontalSide() { return is_touch_left_side || is_touch_right_side; }
 };
-

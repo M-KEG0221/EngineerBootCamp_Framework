@@ -1,0 +1,17 @@
+---
+# 共通定義
+BasedOnStyle: Google
+IndentWidth: 4
+BreakBeforeBraces: Stroustrup
+
+# enum
+AllowShortEnumsOnASingleLine: false
+
+#publicなど
+AccessModifierOffset: 4
+
+AlignConsecutiveAssignments: true
+#ポインター
+PointerAlignment: left
+
+AlignAfterOpenBracket: Align
